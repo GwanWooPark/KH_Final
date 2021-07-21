@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.board.recipe">
+
+
+
+	<select id="selectList" resultType="RboardDto">
+		SELECT BR_NUM, BR_TITLE,
+		BR_CONTENT, BR_REGDATE,
+		BR_READCOUNT,BR_RECCOUNT,BR_CATEGORY,MEMBER_ID
+		FROM
+		BOARDRECIPE
+		ORDER BY BR_NUM DESC
+	</select>
+
+	<select id="selectOne" parameterType="int"
+		resultType="RboardDto">
+		SELECT BR_NUM, BR_TITLE, BR_CONTENT, BR_REGDATE,
+		BR_READCOUNT,BR_RECCOUNT,BR_CATEGORY,MEMBER_ID
+		FROM
+		BOARDRECIPE
+		WHERE BR_NUM = #{br_num}
+	</select>
+
+	<insert id="insert" parameterType="RboardDto">
+		INSERT INTO BOARDRECIPE
+		VALUES(BRNUMSEQ.NEXTVAL,#{br_title},#{br_content},SYSDATE,0,0,'Board',#{member_id})
+	</insert>
+
+	<update id="update" parameterType="RboardDto">
+		UPDATE BOARDRECIPE
+		SET BR_TITLE
+		= #{br_title}, BR_CONTENT = #{br_content}
+		WHERE BR_NUM = #{br_num}
+	</update>
+
+	<update id="delete" parameterType="int">
+		DELETE FROM BOARDRECIPE
+		WHERE
+		BR_NUM = #{br_num}
+	</update>
+
+
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) FROM
+		BOARDRECIPE
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="searchType=='br_title'">
+					AND BR_TITLE like '%'|| #{keyword} || '%'
+				</if>
+				<if test="searchType=='br_content'">
+					AND BR_CONTENT like '%' || #{keyword} || '%'
+				</if>
+				<if test="searchType=='member_id'">
+					AND MEMBER_ID like '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</trim>
+
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard" resultType="RboardDto"
+		parameterType="PagingDto">
+		SELECT BR_NUM, BR_TITLE,
+		BR_CONTENT, BR_REGDATE,
+		BR_READCOUNT,BR_RECCOUNT,BR_CATEGORY,MEMBER_ID
+		FROM (
+		SELECT
+		ROWNUM
+		RN, A.BR_NUM, BR_TITLE,
+		BR_CONTENT, BR_REGDATE,
+		BR_READCOUNT,BR_RECCOUNT,BR_CATEGORY,MEMBER_ID
+		FROM (
+		SELECT
+		BR_NUM, BR_TITLE,
+		BR_CONTENT, BR_REGDATE,
+		BR_READCOUNT,BR_RECCOUNT,BR_CATEGORY,MEMBER_ID
+		FROM
+		BOARDRECIPE
+		ORDER BY BR_NUM DESC
+		) A
+		)
+		WHERE (RN BETWEEN #{start} AND
+		#{end}) 
+		<trim prefix="AND ( " suffix=" )" prefixOverrides="OR">
+			<if
+				test="searchType=='br_title' and keyword != null and keyword != '' ">
+				BR_TITLE like '%' || #{keyword} ||'%'
+			</if>
+			<if
+				test="searchType=='br_content' and keyword != null and keyword != '' ">
+				BR_CONTENT like '%' ||#{keyword} ||'%'
+			</if>
+			<if
+				test="searchType=='member_id' and keyword != null and keyword != '' ">
+				MEMBER_ID like '%' || #{keyword} || '%'
+			</if>
+		</trim>
+	</select>
+
+	<!-- 조회수 +1 -->
+	<update id="readcount" parameterType="int">
+		UPDATE BOARDRECIPE SET
+		BR_READCOUNT = BR_READCOUNT + 1
+		WHERE BR_NUM = #{br_num}
+	</update>
+
+	<!-- 게시글 추천+1 -->
+	<update id="recommend">
+		UPDATE BOARDRECIPE
+		SET BR_RECCOUNT = BR_RECCOUNT+1
+		WHERE MEMBER_ID = #{member_id}
+
+	</update>
+
+
+
+
+</mapper>

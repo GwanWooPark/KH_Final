@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+	
+	<select id="login" parameterType="MemberDto" resultType="MemberDto">
+		SELECT MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDRESS, MEMBER_ROLE, MEMBER_CATEGORY, MEMBER_CERTI, MEMBER_CAREER ,MEMBER_REGDATE
+		FROM MEMBER
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<insert id="insert" parameterType="MemberDto">
+		INSERT INTO MEMBER
+		VALUES(#{member_id},#{member_pw},#{member_name},#{member_email},#{member_phone},#{member_address},#{member_role},#{member_category},#{member_certi},#{member_career},SYSDATE)
+	</insert>
+
+	<delete id="delete" parameterType="MemberDto">
+		DELETE FROM MEMBER
+		WHERE MEMBER_ID=#{member_id}
+	</delete>
+	
+	<select id="checkId" parameterType="String" resultType="String">
+		SELECT COUNT(*) 
+		FROM MEMBER
+		WHERE MEMBER_ID=#{checkID}
+	</select>
+	
+	<select id="findId" parameterType="MemberDto" resultType="String">
+		SELECT MEMBER_ID
+		FROM MEMBER
+		WHERE MEMBER_NAME = #{member_name} AND MEMBER_EMAIL = #{member_email}
+	</select>
+	
+	<select id="findPw" parameterType="MemberDto" resultType="String">
+		SELECT MEMBER_PW
+		FROM MEMBER
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_NAME = #{member_name}
+	</select>
+
+</mapper>
