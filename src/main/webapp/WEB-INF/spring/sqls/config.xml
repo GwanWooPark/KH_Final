@@ -12,6 +12,7 @@
 	<typeAlias type="com.kh.bnpp.model.dto.MemberDto" alias="memberDto"/>
 	<typeAlias type="com.kh.bnpp.model.dto.KakaoDto" alias="kakaoDto"/>
 	<typeAlias type="com.kh.bnpp.model.dto.RecipeDto" alias="RecipeDto"/>
+	<typeAlias type="com.kh.bnpp.model.dto.RtcDto" alias="RtcDto"/>
 </typeAliases>
 
 <!--  resource : src/main/resources와 연결됨 -->
@@ -21,5 +22,6 @@
 	<mapper resource="/mybatis/member-mapper.xml"/>
 	<mapper resource="/mybatis/kakao-mapper.xml"/>
 	<mapper resource="/mybatis/rrecipe-mapper.xml"/>
+	<mapper resource="/mybatis/rtc-mapper.xml"/>
 </mappers>
 </configuration>

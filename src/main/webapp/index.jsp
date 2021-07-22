@@ -8,7 +8,6 @@
         function popupCenter(href, w, h) {
             var xPos = (document.body.offsetWidth/2) - (w/2); // 가운데 정렬
             var yPos = (document.body.offsetHeight/2) - (h/2);
-
             window.open(href, "pop_name", "width="+w+", height="+h+", left="+xPos+", top="+yPos+", menubar=yes, status=yes, titlebar=yes, resizable=yes");
         }
     </script>
@@ -19,6 +18,8 @@
     <a href="chatlogin.do">Chatlogin</a> <br>
     <a href="machine.do">machine</a>
     <a href="main.do">main</a>
+    <a href="createRoom.do">createRoom</a><br>
+    <a href="listRoom.do">방 목록 보기</a>
     <br>
     <br>
     <br>

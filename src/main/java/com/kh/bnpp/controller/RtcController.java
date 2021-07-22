@@ -1,20 +1,58 @@
 package com.kh.bnpp.controller;
 
 
+import com.kh.bnpp.model.biz.RtcBiz;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RtcController {
 
-    @RequestMapping("webRtc.do")
-    public String webRtc() {
+    @Autowired
+    private RtcBiz biz;
 
-        String kakao_url = "https://kakaoi-newtone-openapi.kakao.com/v1/recognize";
-        String headers = "{\"Transfer-Encoding\": \"chunked\", \"Content-Type\": \"application/octet-stream\"," +
-                "\"Authorization\": \"KakaoAK 8cb7899ce6c96b55769b91a18e92efd3\"}"; //json
-        return "webRtc";
+    @RequestMapping("createRoom.do")
+    public String webRtc() {
+        return "redirect:https://localhost:3000";
+
     }
 
+    @RequestMapping(value = "insertRoom.do")
+    @ResponseBody
+    public String insertRoom(HttpServletRequest request) {
 
+        if (biz.insertRoom(request.getParameter("roomId")) > 0){
+            return "";
+        } else {
+            System.out.println("방에 입장합니다");
+        }
+        return "";
+    }
+
+    @RequestMapping("listRoom.do")
+    public String listRoom(Model model) {
+
+        model.addAttribute("list", biz.selectRoomList());
+        return "roomList";
+    }
+
+    @RequestMapping(value = "roomPass.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String roomPass(HttpServletRequest request) {
+
+        String roomId = request.getParameter("roomId");
+        String roomPass = request.getParameter("pass");
+
+        if (biz.compareInfo(roomId, roomPass) > 0){
+            return "redirect:https://localhost:3000/" + roomId;
+        }
+        return "redirect:listRoom.do";
+    }
 }
