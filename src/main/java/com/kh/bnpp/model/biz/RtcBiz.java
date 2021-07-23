@@ -7,6 +7,6 @@ import java.util.List;
 public interface RtcBiz {
 
     public List<RtcDto> selectRoomList();
-    public int insertRoom(String roomId);
+    public int insertRoom(String roomId, String roomTitle);
     public int compareInfo(String roomId, String roomPass);
 }

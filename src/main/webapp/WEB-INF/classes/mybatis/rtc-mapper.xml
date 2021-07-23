@@ -3,13 +3,13 @@
 <mapper namespace="com.rtc">
 
     <select id="selectRoomList" resultType="RtcDto">
-        SELECT RTC_ROOM
+        SELECT RTC_ROOM, RTC_TITLE
         FROM RTC
     </select>
 
     <insert id="insertRoom" parameterType="hashmap">
         INSERT INTO RTC
-        VALUES (#{roomId}, #{roomPass})
+        VALUES (#{roomId}, #{roomPass}, #{roomTitle})
     </insert>
 
     <select id="compareInfo" parameterType="hashmap" resultType="int">

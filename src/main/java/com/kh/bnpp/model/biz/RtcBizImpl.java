@@ -19,8 +19,8 @@ public class RtcBizImpl implements RtcBiz{
     }
 
     @Override
-    public int insertRoom(String roomId) {
-        return dao.insertRoom(roomId);
+    public int insertRoom(String roomId, String roomTitle) {
+        return dao.insertRoom(roomId, roomTitle);
     }
 
     @Override

@@ -19,16 +19,16 @@ public class RtcController {
     private RtcBiz biz;
 
     @RequestMapping("createRoom.do")
-    public String webRtc() {
-        return "redirect:https://localhost:3000";
+    public String webRtc(Model model, HttpServletRequest request) {
+
+        return "redirect:https://localhost:3000?roomTitle=" + request.getParameter("roomTitle");
 
     }
 
     @RequestMapping(value = "insertRoom.do")
     @ResponseBody
     public String insertRoom(HttpServletRequest request) {
-
-        if (biz.insertRoom(request.getParameter("roomId")) > 0){
+        if (biz.insertRoom(request.getParameter("roomId"), request.getParameter("roomTitle")) > 0){
             return "";
         } else {
             System.out.println("방에 입장합니다");

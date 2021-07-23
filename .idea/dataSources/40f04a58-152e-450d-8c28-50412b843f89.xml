@@ -37,9 +37,9 @@
     <schema id="12" parent="1" name="BIG3FINAL04">
       <ObjectId>56</ObjectId>
       <CreatedTimestamp>2021-06-26.01:34:30</CreatedTimestamp>
-      <ModifiedTimestamp>2021-07-23.08:26:45</ModifiedTimestamp>
+      <ModifiedTimestamp>2021-07-23.08:30:21</ModifiedTimestamp>
       <IntrospectionVersion>200820</IntrospectionVersion>
-      <IntrospectionTimestamp>2021-07-23.08:26:46</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2021-07-23.08:30:22</IntrospectionTimestamp>
       <Current>1</Current>
     </schema>
     <schema id="13" parent="1" name="CTXSYS">
@@ -367,7 +367,7 @@
     <table id="82" parent="12" name="RTC">
       <ObjectId>25875</ObjectId>
       <CreatedTimestamp>2021-07-23.01:56:44</CreatedTimestamp>
-      <ModifiedTimestamp>2021-07-23.08:26:45</ModifiedTimestamp>
+      <ModifiedTimestamp>2021-07-23.08:30:21</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <routine id="83" parent="12" name="CUSTOM_AUTH">
@@ -30650,6 +30650,7 @@ CUST_FIRST_NAME</ColNames>
     <column id="4550" parent="82" name="RTC_TITLE">
       <Position>3</Position>
       <DataType>VARCHAR2(200 byte)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
     <index id="4551" parent="82" name="RTC_PK">
       <ObjectId>25876</ObjectId>

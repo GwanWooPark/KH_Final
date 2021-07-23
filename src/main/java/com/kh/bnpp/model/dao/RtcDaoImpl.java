@@ -31,14 +31,14 @@ public class RtcDaoImpl implements RtcDao{
     }
 
     @Override
-    public int insertRoom(String roomId) {
+    public int insertRoom(String roomId, String roomTitle) {
 
         int res = 0;
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("roomId", roomId);
         params.put("roomPass", "1234");
-        params.put("roomTitle", "입력");
+        params.put("roomTitle", roomTitle);
 
         try {
             res = sqlSession.insert(NAMESPACE + "insertRoom", params);

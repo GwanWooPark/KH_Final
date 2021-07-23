@@ -42,7 +42,7 @@
             <c:otherwise>
                 <c:forEach items="${list }" var="dto">
                     <tr>
-                        <td><a href="#" class="${dto.rtc_room }">백종원의 방</a></td>
+                        <td><a href="#" class="${dto.rtc_room }">${dto.rtc_title}</a></td>
                     </tr>
                 </c:forEach>
             </c:otherwise>
