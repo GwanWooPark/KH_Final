@@ -7,6 +7,11 @@
         FROM RTC
     </select>
 
+    <select id="isRoom" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM RTC
+        WHERE RTC_TITLE = #{roomTitle}
+    </select>
     <insert id="insertRoom" parameterType="hashmap">
         INSERT INTO RTC
         VALUES (#{roomId}, #{roomPass}, #{roomTitle})

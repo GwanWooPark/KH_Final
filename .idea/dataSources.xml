@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@qclass.iptime.org" uuid="40f04a58-152e-450d-8c28-50412b843f89">
+    <data-source source="LOCAL" name="@qclass.iptime.org" uuid="a6446c96-31ca-41ce-a41e-3c533e13c4c4">
       <driver-ref>oracle.19</driver-ref>
       <synchronize>true</synchronize>
       <auto-commit>false</auto-commit>

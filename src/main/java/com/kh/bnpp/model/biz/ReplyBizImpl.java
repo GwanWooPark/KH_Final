@@ -50,4 +50,5 @@ public class ReplyBizImpl implements ReplyBiz {
 		return dao.rboard_delete(br_num);
 	}
 
+
 }
