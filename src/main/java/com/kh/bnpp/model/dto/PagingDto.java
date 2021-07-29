@@ -10,7 +10,18 @@ public class PagingDto {
 
 		private int cntPage = 5;
 		
+		
+		
+		
 		public PagingDto() {
+		}
+		public PagingDto(int total, int nowPage, int cntPerPage) {
+			setNowPage(nowPage);
+			setCntPerPage(cntPerPage);
+			setTotal(total);
+			calcLastPage(getTotal(), getCntPerPage());
+			calcStartEndPage(getNowPage(), cntPage);
+			calcStartEnd(getNowPage(), getCntPerPage());
 		}
 		public PagingDto(int total, int nowPage, int cntPerPage, String keyword, String searchType) {
 			setNowPage(nowPage);

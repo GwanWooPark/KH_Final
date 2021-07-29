@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.mypage-body {
+	width: 1200px;
+	margin: 0 auto;
+	min-height: 1000px;
+}
+
+#mypage_nav {
+	margin-bottom: 20px;
+}
+
+#mypage_nav nav ul {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#mypage_nav nav ul li {
+    float: left;
+}
+
+#mypage_nav nav ul li a {
+	display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.mypage_h3 {
+	font-weight: bolder;
+}
+
+.mypage_info {
+	height: 100px;
+	margin-bottom: 15px;
+}
+
+.mypage_info_id {
+	float: left;
+	height: 100px;
+	width: 150px;
+	text-align: center;
+}
+
+.mypage_info_name {
+	display: block;
+	height: 25px;
+	font-weight: bolder;
+}
+
+.lecture_list {
+	margin-top:5px;
+	margin-bottom : 5px;
+	border-bottom : 1px solid #dadada;
+	height: 100px;
+}
+
+.lecture_img_div {
+	float: left;
+	width: 200px;
+	height: 100px;
+	text-align: center;
+}
+
+.lecture_img {
+	width: 100px;
+	height: 99px;
+}
+
+.lecture_info {
+	float: left;
+	width: 900px;
+	height: 100px;
+}
+
+.lecture_info_num {
+	display: block;
+	height: 10%;
+	font-size: 10px;
+	margin-bottom: 2px;
+}
+
+.lecture_info_name {
+	display: block;
+	height: 50%;
+	font-weight: bolder;
+	font-size: 30px;
+	line-height: 1.5;
+}
+
+.lecture_info_category {
+	padding-right: 10px;
+	border-right: 1px solid #dadada;
+}
+
+.lecture_info_money {
+	margin-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #dadada;
+}
+
+.lecture_info_teacher {
+	margin-left: 10px;
+	color: #3A01DF;
+}
+
+.lecture_status {
+	float: left;
+	padding-top: 30px;
+	width: 100px;
+	height: 100px;
+}
+
+.mymenus li {
+	float: left;
+}
+
+.mymenu {
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 15px 20px;
+	text-decoration: none;
+}
+
+.mymenus {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.orderIng ol li {
+	left: 61px;
+	padding-right: 45px;
+}
+
+.general_signup_idpw {
+	height: 500px;
+}
+
+#general_signup_mid {
+	width: 500px;
+	margin: 0 auto;
+	min-height: 1000px;
+}
+
+.general_signup_idpw {
+	height: 500px;
+}
+
+.general_signup_span {
+	display: block;
+	border: solid 1px #dadada;
+	width: 450px;
+	height: 50px;
+}
+
+.general_signup_span_home_addr {
+	display: block;
+	border: solid 1px #dadada;
+	width: 450px;
+	height: 80px;
+}
+
+.general_signup_text {
+	display: inline-block;
+	height: 40px;
+	width: 75%;
+	border: none;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+#general_signup_email {
+	display: inline-block;
+	height: 40px;
+	width: 75%;
+	border: solid 1px #dadada;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+.general_signup_phone {
+	display: inline-block;
+	height: 40px;
+	width: 20%;
+	border: solid 1px #dadada;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+.general_signup_addr {
+	border: solid 1px #dadada;
+	padding-left: 10px;
+}
+
+.general_signup_title {
+	display: block;
+	margin-bottom: 3px;
+	margin-top: 10px;
+}
+
+#general_signup_btn {
+	padding-top: 10px;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kh.bnpp.food">
+  
+	<select id="selectList" resultType="FoodDto">
+		SELECT FOOD_NUM, FOOD_NAME, FOOD_LIFE, FOOD_ALARM_YN, MEMBER_ID 
+		FROM FOOD
+		ORDER BY FOOD_NUM DESC
+	</select>
+	
+	<select id="selectMyList" parameterType="FoodDto" resultType="FoodDto">
+		SELECT FOOD_NUM, FOOD_NAME, FOOD_LIFE, FOOD_ALARM_YN, MEMBER_ID 
+		FROM FOOD
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="FoodDto">
+		SELECT FOOD_NUM, FOOD_NAME, FOOD_LIFE, FOOD_ALARM_YN, MEMBER_ID 
+		FROM FOOD
+		WHERE FOOD_NUM = #{food_num}
+	</select>
+	
+	<insert id="insert" parameterType="FoodDto">
+		INSERT INTO FOOD
+		VALUES(FOODSEQ.NEXTVAL, #{food_name}, '미설정', 'N', #{member_id})
+	</insert>
+	
+	<update id="updateLife" parameterType="FoodDto">
+		UPDATE FOOD
+		SET FOOD_NAME = #{food_name}, FOOD_LIFE = #{food_life}
+		WHERE FOOD_NUM = #{food_num}
+	</update>
+	
+	<update id="updateAlarm" parameterType="int">
+		UPDATE FOOD
+		SET FOOD_ALARM_YN = 'Y'
+		WHERE FOOD_NUM = #{food_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM FOOD
+		WHERE FOOD_NUM = #{food_num}
+	</delete>
+  
+</mapper>
+
+

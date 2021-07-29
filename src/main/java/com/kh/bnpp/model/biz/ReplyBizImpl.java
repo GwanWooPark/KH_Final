@@ -50,5 +50,9 @@ public class ReplyBizImpl implements ReplyBiz {
 		return dao.rboard_delete(br_num);
 	}
 
+	@Override
+	public ReplyDto selectOne(int reply_no) {
+		return dao.selectOne(reply_no);
+	}
 
 }

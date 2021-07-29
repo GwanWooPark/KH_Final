@@ -109,10 +109,10 @@
 	</update>
 
 	<!-- 게시글 추천+1 -->
-	<update id="recommend">
+	<update id="recommend" parameterType="int">
 		UPDATE BOARDRECIPE
 		SET BR_RECCOUNT = BR_RECCOUNT+1
-		WHERE MEMBER_ID = #{member_id}
+		WHERE BR_NUM = #{br_num}
 
 	</update>
 

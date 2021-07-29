@@ -17,7 +17,7 @@
 			  )
 	</select>
 	
-	<select id="reply_select" parameterType="ReplyDto">
+	<select id="reply_select" parameterType="int" resultType="ReplyDto">
 		SELECT REPLY_NO,REPLY_DELFLAG, REPLY_CONTENT, REPLY_REGDATE, BR_NUM, REPLY_MEMBER_ID
 		FROM BOARDREPLY
 		WHERE REPLY_NO = #{reply_no}

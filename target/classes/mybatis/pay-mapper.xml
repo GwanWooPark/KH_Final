@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kh.bnpp.pay">
+	
+	<select id="selectList" resultType="PayDto">
+		SELECT PAY_NUM, PAY_DATE, CLASS_PRICE, PAY_STEP, MEMBER_ID, CLASS_NUM, CLASS_TITLE, CLASS_CATEGORY
+		FROM PAY
+		ORDER BY PAY_NUM DESC
+	</select>
+	
+	<select id="selectMyList" parameterType="PayDto" resultType="PayDto">
+		SELECT P.PAY_NUM, P.PAY_DATE, C.CLASS_PRICE, P.PAY_STEP, P.MEMBER_ID, C.CLASS_NUM, C.CLASS_TITLE, 
+		(SELECT MEMBER_CATEGORY FROM MEMBER WHERE MEMBER_ID = C.TEACHER_ID) AS CLASS_CATEGORY
+		FROM PAY P, CLASS C
+		WHERE P.MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="PayDto">
+		SELECT PAY_NUM, PAY_DATE, CLASS_PRICE, PAY_STEP, MEMBER_ID, CLASS_NUM, CLASS_TITLE, CLASS_CATEGORY
+		FROM PAY
+		WHERE PAY_NUM = #{pay_num}
+	</select>
+	
+	<insert id="insert" parameterType="PayDto">
+		INSERT INTO PAY
+		VALUES(PAYSEQ.NEXTVAL, SYSDATE, #{class_price}, '결제완료', #{member_id}, #{class_num}, #{class_title}, #{class_category})
+	</insert>
+	
+	<update id="update" parameterType="PayDto">
+		UPDATE PAY
+		SET PAY_DATE = SYSDATE, PAY_STEP = #{pay_step}
+		WHERE PAY_NUM = #{pay_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM PAY
+		WHERE PAY_NUM = #{pay_num}
+	</delete>
+	
+</mapper>
+
+
+

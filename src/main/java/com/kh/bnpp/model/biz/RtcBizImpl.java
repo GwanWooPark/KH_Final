@@ -27,5 +27,4 @@ public class RtcBizImpl implements RtcBiz{
     public int compareInfo(String roomId, String roomPass) {
         return dao.compareInfo(roomId, roomPass);
     }
-
 }

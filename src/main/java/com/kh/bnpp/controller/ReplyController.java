@@ -1,13 +1,16 @@
 package com.kh.bnpp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.bnpp.model.biz.ReplyBiz;
 import com.kh.bnpp.model.dto.ReplyDto;
@@ -18,53 +21,74 @@ public class ReplyController {
 	@Autowired
 	private ReplyBiz rbiz;
 
-	@RequestMapping("/replylist.do")
-	public String replylistRes(Model model,int br_num) {
-		model.addAttribute("replylist",rbiz.reply_selectList(br_num));
+	@PostMapping("/replylist.do")
+	@ResponseBody
+	public List<ReplyDto> replylist(@RequestParam(value = "br_num", required = false) int br_num) {
+		List<ReplyDto> replylist = rbiz.reply_selectList(br_num);
+		return replylist;
+	}
+
+	@PostMapping("/replywrite.do")
+	@ResponseBody
+	public Map<String, Object> replywrite(@RequestParam(value = "br_num", required = false) int br_num,
+			@RequestParam(value = "reply_member_id", required = false) String reply_member_id,
+			@RequestParam(value = "reply_content", required = false) String reply_content) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			ReplyDto ReplyDto = new ReplyDto();
+			ReplyDto.setBr_num(br_num);
+			ReplyDto.setReply_member_id(reply_member_id);
+			ReplyDto.setReply_content(reply_content);
+			if (rbiz.reply_insert(ReplyDto) > 0) {
+				map.put("result", "success");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("result", "fail");
+		}
+		return map;
+	}
+
+	@PostMapping("/replyupdate.do")
+	@ResponseBody
+	public Map<String, Object> replyupdate(@RequestParam(value = "reply_no", required = false) int reply_no,
+			@RequestParam(value = "reply_content", required = false) String reply_content) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			ReplyDto ReplyDto = new ReplyDto();
+			ReplyDto.setReply_no(reply_no);
+			ReplyDto.setReply_content(reply_content);
+			if (rbiz.reply_update(ReplyDto) > 0) {
+
+				map.put("result", "success");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("result", "fail");
+		}
+		return map;
+	}
+
+	@PostMapping("/replydelete.do")
+	@ResponseBody
+	public Map<String, Object> replydelete(ReplyDto ReplyDto, @RequestParam(value = "reply_no", required = false) int reply_no) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		return "rboardselect";
-	}
-	
-	@RequestMapping("/replyinsert.do")
-	public String replyinsertRes(ReplyDto rdto) {
+		try {
+			
+			ReplyDto.setReply_no(reply_no);
+			if (rbiz.reply_delete(reply_no)>0) {
 
-		if (rbiz.reply_insert(rdto) > 0) {
-			return "redirect:select.do?br_num=" + rdto.getBr_num();
+			map.put("result", "success");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("result", "fail");
 		}
-
-		return "redirect:select.do?br_num=" + rdto.getBr_num();
-	}
-
-	
-	@ResponseBody
-	@RequestMapping("/replyupdateres.do")
-	public Map<String,Object> replyupdateRes(ReplyDto rdto) {
-
-		if (rbiz.reply_update(rdto) > 0) {
-			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("isSuccess", true );
-			return map;
-		}
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("isSuccess", false );
 		return map;
 	}
-	
-	@ResponseBody
-	@RequestMapping("/replydelete.do")
-	public Map<String,Object> replydeleteRes(int reply_no) {
 
-		if (rbiz.reply_delete(reply_no) > 0) {
-			System.out.println("댓글번호 : " + reply_no);
-			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("isSuccess", true );
-			return map;
-		}
-
-		System.out.println("댓글번호 : " + reply_no);
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("isSuccess", false );
-		return map;
-	}
-	
 }

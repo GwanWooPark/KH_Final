@@ -17,5 +17,5 @@ public interface ReplyBiz {
 	public int r_reply_insert(ReplyDto Rdto);
 	public int reply_groupseq_update(int br_num);
 	public int rboard_delete(int br_num);
-	
+	public ReplyDto selectOne(int reply_no);
 }

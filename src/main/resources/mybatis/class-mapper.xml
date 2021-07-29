@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="class">
+	
+	<select id="selectList" parameterType="String" resultType="ClassDetailDto">
+		SELECT M.MEMBER_NAME, M.MEMBER_CATEGORY, C.CLASS_NUM, C.TEACHER_ID, C.CLASS_TITLE, C.CLASS_INTRO, C.CLASS_PRICE, C.CLASS_HOW, C.CLASS_WHERE, C.CLASS_INGRED, C.CLASS_CONTENT, C.CLASS_REGDATE, C.CLASS_MEDIA_NAME, C.CLASS_MEDIA_PATH
+		FROM MEMBER M , CLASS C 
+		WHERE C.TEACHER_ID = #{teacher_id} AND M.MEMBER_ID = C.TEACHER_ID
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="ClassDto">
+		SELECT C.CLASS_NUM, C.TEACHER_ID, C.CLASS_TITLE, C.CLASS_INTRO, C.CLASS_PRICE, C.CLASS_HOW, C.CLASS_WHERE, C.CLASS_INGRED, C.CLASS_CONTENT, C.CLASS_REGDATE, C.CLASS_MEDIA_NAME, C.CLASS_MEDIA_PATH, M.MEMBER_NAME, M.MEMBER_CATEGORY 
+		FROM MEMBER M , CLASS C 
+		WHERE M.MEMBER_ID = C.TEACHER_ID AND C.CLASS_NUM = #{class_num}
+	</select>
+	
+	<insert id="insert" parameterType="ClassDto">
+		INSERT INTO CLASS
+		VALUES(CLASS_NUM.NEXTVAL, #{teacher_id}, #{class_title}, #{class_intro}, #{class_price}, #{class_how}, #{class_where}, #{class_ingred}, #{class_content}, SYSDATE, #{class_media_name}, #{class_media_path})
+	</insert>
+	
+	<update id="update" parameterType="ClassDto">
+		UPDATE CLASS
+		SET CLASS_TITLE = #{class_title}, CLASS_INTRO = #{class_intro}, CLASS_PRICE = #{class_price}, CLASS_HOW = #{class_how}, CLASS_WHERE = #{class_where}, CLASS_INGRED = #{class_ingred}, CLASS_CONTENT = #{class_content}, CLASS_MEDIA_NAME = #{class_media_name}, CLASS_MEDIA_PATH = #{class_media_path}
+		WHERE CLASS_NUM = #{class_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM CLASS
+		WHERE CLASS_NUM = #{class_num}
+	</delete>
+
+</mapper>
+
+

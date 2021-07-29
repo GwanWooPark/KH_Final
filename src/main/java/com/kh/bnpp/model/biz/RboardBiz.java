@@ -25,4 +25,8 @@ public interface RboardBiz {
 
 	//조회수
 	public int readCount(int br_num);
+	
+	//추천
+	public int recommend(int br_num);
+
 }

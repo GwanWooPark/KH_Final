@@ -13,4 +13,9 @@
       <module name="KH_Final" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="KH_Final" options="-Xlint:all" />
+    </option>
+  </component>
 </project>

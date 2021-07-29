@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kh.bnpp.bill">
+	
+	
+	<select id="selecList" parameterType="String" resultType="BillDto">
+		SELECT BILL_NUM, BILL_NAME, BILL_PRICE, BILL_QUANTITY, BILL_TOTAL, BILL_DATE, MEMBER_ID
+		FROM BILL
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="BillDto">
+		SELECT BILL_NUM, BILL_NAME, BILL_PRICE, BILL_QUANTITY, BILL_TOTAL, BILL_DATE, MEMBER_ID
+		FROM BILL
+		WHERE BILL_NUM = #{bill_num}
+	</select>
+	
+	<insert id="insert" parameterType="BillDto">
+		INSERT INTO BILL
+		VALUES(BILLSEQ.NEXTVAL, #{bill_name}, #{bill_price}, #{bill_quantity}, #{bill_total}, #{bill_date}, #{member_id})
+	</insert>
+	
+	<update id="update" parameterType="BillDto">
+		UPDATE BILL
+		SET BILL_NAME = #{bill_name}, BILL_PRICE = #{bill_price}, BILL_QUANTITY = #{bill_quantity}, BILL_TOTAL = #{bill_total}
+		WHERE BILL_NUM = #{bill_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM BILL
+		WHERE BILL_NUM = #{bill_num}
+	</delete>
+	
+</mapper>

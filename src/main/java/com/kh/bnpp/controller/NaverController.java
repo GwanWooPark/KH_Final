@@ -2,6 +2,8 @@ package com.kh.bnpp.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.bnpp.model.biz.MemberBiz;
 import com.kh.bnpp.model.biz.NaverLoginBiz;
+import com.kh.bnpp.model.dto.MemberDto;
 
 @Controller
 public class NaverController {
@@ -25,13 +29,18 @@ public class NaverController {
 	private Logger logger = LoggerFactory.getLogger(NaverController.class);
 
 	/* NaverLoginBiz */
+	@Autowired
 	private NaverLoginBiz naverLoginBiz;
 	private String apiResult = null;
-
+	
 	@Autowired
-	private void setNaverLoginBiz(NaverLoginBiz naverLoginBiz) {
-		this.naverLoginBiz = naverLoginBiz;
-	}
+	private MemberBiz mBiz;
+
+	/* NaverLoginBiz */
+	//@Autowired
+	//private void setNaverLoginBiz(NaverLoginBiz naverLoginBiz) {
+	//	this.naverLoginBiz = naverLoginBiz;
+	//}
 	
 	// 참고
 	// index.jsp에서 인증URL을 전달해줄 때 ${URL}에 담아서 넘겨줘야해서 LoginController에서 넘겨주기로 함
@@ -67,9 +76,9 @@ public class NaverController {
 
 		logger.info("[NaverController] 네이버 로그인 성공 후 callback메소드 도착");
 		OAuth2AccessToken oauthToken;
+		logger.info("[NaverController] callback메소드로 code파라미터 가져옴?? : " + code);
+		logger.info(String.format("%s \n %s \t %s", session, code, state));
 		oauthToken = naverLoginBiz.getAccessToken(session, code, state);
-		
-		logger.info("[NaverController] getAcTo으로 토큰값 받아옴?? : " + oauthToken);
 		
 		// 1. 로그인 사용자 정보를 읽어온다.
 		apiResult = naverLoginBiz.getUserProfile(oauthToken); // String형식의 json데이터
@@ -82,21 +91,44 @@ public class NaverController {
 		// 2. String형식인 apiResult를 json형태로 바꾸기
 		JsonParser parser = new JsonParser();
 		Object obj = parser.parse(apiResult);
-		System.out.println("json문자열을 tree로 만든거 어떻게 생김??? : " + obj);
 		JsonObject jsonObj = (JsonObject) obj;
-		System.out.println("jsonObj 어떻게 생김??? : " + jsonObj);
+		
 		// 3. 데이터 파싱
 		// Top레벨 단계 _response 파싱
 		JsonObject response_obj = (JsonObject) jsonObj.get("response");
-		// response의 nickname값 파싱
-		String nickname = response_obj.get("nickname").getAsString();
+		System.out.println(response_obj);
+		// response의 name값 파싱
+		String nickname = response_obj.get("name").getAsString();
+		System.out.println(nickname);
 		System.out.println("nickname 가져왔음?? : " + nickname);
-
-		// 4.파싱 닉네임 세션으로 저장
-		session.setAttribute("sessionId", nickname);
-
-		model.addAttribute("result", apiResult);
-
+		//String email = response_obj.get("email").getAsString();
+		String NaverId = nickname + "Na";
+		//String randId = UUID.randomUUID().toString().replaceAll("-","")+nickname;
+		
+		MemberDto dbDto = new MemberDto(NaverId, "naver", nickname, "naver.com", "", "", "M", "", "", "", "", null, "", "");
+		
+		if(mBiz.login(dbDto) == null) {
+			int res = mBiz.insert(dbDto);
+			
+			System.out.println("네이버로 첫 로그인이라 db에 저장함");
+			
+			if(res > 0) {
+				System.out.println("네이버 db저장 성공");
+			}else {
+				System.out.println("네이버 db저장 실패");
+			}
+			
+			// 4.파싱 닉네임 세션으로 저장
+			session.setAttribute("dbDto", dbDto);
+			session.setAttribute("loginCheck", true);
+			model.addAttribute("result", apiResult);
+			
+		} else {
+			System.out.println("네이버로 로그인한 적 있어서 그냥 dto꺼내옴");
+			MemberDto dto = mBiz.login(dbDto);
+			session.setAttribute("dbDto", dto);
+		}
+		
 		return "redirect:/";
 	}
 

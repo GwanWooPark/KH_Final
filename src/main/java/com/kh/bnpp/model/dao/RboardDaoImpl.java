@@ -114,4 +114,16 @@ public class RboardDaoImpl implements RboardDao {
 		}
 		return res;
 	}
+
+	
+	@Override
+	public int recommend(int br_num)  {
+		int res = 0;
+		try {
+			sqlSession.insert(NAMESPACE + "recommend",br_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

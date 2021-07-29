@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.bnpp.model.biz.KakaoBiz;
+import com.kh.bnpp.model.biz.MemberBiz;
+import com.kh.bnpp.model.dto.MemberDto;
 
 @Controller
 public class KakaoController {
@@ -21,6 +23,9 @@ public class KakaoController {
 	
 	@Autowired
 	private KakaoBiz kakaoBiz;
+	
+	@Autowired
+	private MemberBiz mBiz;
 
 	@RequestMapping("/kakaologin.do")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) { 
@@ -41,12 +46,34 @@ public class KakaoController {
 		Map<String, Object> userInfo = kakaoBiz.getUserInfo(access_Token);
 		System.out.println("사용자 정보 : " + userInfo);
 		
-		//4.클라이언트의 닉네임이 존재하면 세션에 해당 닉네임과 이메일과 토큰 등록
-		if(userInfo.get("nickname") != null) {
-			session.setAttribute("userId", userInfo.get("nickname"));
-			session.setAttribute("access_Token", access_Token);
-			session.setAttribute("loginCheck", true);
+		String KakaoId = (String)userInfo.get("nickname") + "ka";
+		
+		MemberDto dbDto = new MemberDto(KakaoId, "kakao", (String)userInfo.get("nickname"), "kakao.com", "", "", "M", "", "", "", "", null, "", "");
+		
+		if(mBiz.login(dbDto) == null) {
+		
+			int res = 0;
+			
+			res = mBiz.insert(dbDto);
+			if(res > 0) {
+				System.out.println("카카오 첫 로그인이라 dto저장");
+				session.setAttribute("dbDto", dbDto);
+				session.setAttribute("access_Token", access_Token);
+				session.setAttribute("loginCheck", true);
+				System.out.println("카카오 db저장 성공");
+			}else {
+				System.out.println("카카오 db저장 실패");
+			}
+		} else{
+			System.out.println("카카오 로그인 한 적 있어서 dto꺼내옴");
+			MemberDto dto = mBiz.login(dbDto);
+			session.setAttribute("dbDto", dto);
 		}
+		/*4.클라이언트의 닉네임이 존재하면 세션에 해당 닉네임과 이메일과 토큰 등록
+		if(userInfo.get("nickname") != null) {
+			
+		}
+		*/
 		
 		return "redirect:/";
 	}

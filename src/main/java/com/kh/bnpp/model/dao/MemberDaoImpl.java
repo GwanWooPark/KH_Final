@@ -1,4 +1,8 @@
+
 package com.kh.bnpp.model.dao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,4 +116,72 @@ public class MemberDaoImpl implements MemberDao {
 		return member_pw;
 	}
 	
+	@Override
+	public List<MemberDto> selectList() {
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		try {
+			list = sqlSession.selectList(NAMESPACE + "selectList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public MemberDto selectOne(String member_id) {
+		MemberDto dto = null;
+		try {
+			dto = sqlSession.selectOne(NAMESPACE + "selectOne", member_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	@Override
+	public int updatestudent(MemberDto dto) {
+		int res = 0;
+		try {
+			res = sqlSession.update(NAMESPACE + "updatestudent", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@Override
+	public int updateteacher(MemberDto dto) {
+		int res = 0;
+		try {
+			res = sqlSession.update(NAMESPACE + "updateteacher", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public List<MemberDto> findAllT(String category) {
+		List<MemberDto> list = new ArrayList<MemberDto>();
+
+		try {
+			list = sqlSession.selectList(NAMESPACE + "findAllT", category);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public int updatepw(MemberDto dto) {
+		int res = 0;
+		try {
+			res = sqlSession.update(NAMESPACE + "updatepw", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
+

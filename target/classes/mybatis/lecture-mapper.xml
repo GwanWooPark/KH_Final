@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kh.bnpp.lec">
+	
+	<select id="selectList" resultType="LectureDto">
+		SELECT LECTURE_NUM, LECTURE_NAME, MEMBER_ID, MEMBER_NAME, LECTURE_CATEGORY, LECTURE_PRICE, LECTURE_CONTENT
+		FROM LECTURE
+		ORDER BY LECTURE_NUM DESC
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="LectureDto">
+		SELECT LECTURE_NUM, LECTURE_NAME, MEMBER_ID, MEMBER_NAME, LECTURE_CATEGORY, LECTURE_PRICE, LECTURE_CONTENT
+		FROM LECTURE
+		WHERE LECTURE_NUM = #{lecture_num}
+	</select>
+	
+	<select id="selectMyList" parameterType="String" resultType="LectureDto">
+		SELECT LECTURE_NUM, LECTURE_NAME, MEMBER_ID, MEMBER_NAME, LECTURE_CATEGORY, LECTURE_PRICE, LECTURE_CONTENT
+		FROM LECTURE
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<insert id="insert" parameterType="LectureDto">
+		INSERT INTO LECTURE
+		VALUES(LECTURESEQ.NEXTVAL, #{lecture_name}, #{member_id}, #{member_name}, #{lecture_category}, #{lecture_price}, #{lecture_content})
+	</insert>
+	
+	<update id="update" parameterType="LectureDto">
+		UPDATE LECTURE
+		SET LECTURE_NAME = #{lecture_name}, LECTURE_CATEGORY = #{lecture_category}, LECTURE_PRICE = #{lecture_price}, LECTURE_CONTENT = #{lecture_content}
+		WHERE LECTURE_NUM = #{lecture_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM LECTURE
+		WHERE LECTURE_NUM = #{lecture_num}
+	</delete>
+
+</mapper>

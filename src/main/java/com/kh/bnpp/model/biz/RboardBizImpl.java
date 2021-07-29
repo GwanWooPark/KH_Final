@@ -55,4 +55,9 @@ public class RboardBizImpl implements RboardBiz {
 		return dao.readCount(br_num);
 	}
 
+	@Override
+	public int recommend(int br_num) {
+		return dao.recommend(br_num);
+	}
+
 }

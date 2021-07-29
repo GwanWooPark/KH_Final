@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class RtcController {
 
     }
 
-    @RequestMapping("insertRoom.do")
+    @RequestMapping(value = "insertRoom.do")
     @ResponseBody
     public String insertRoom(HttpServletRequest request) {
         if (biz.insertRoom(request.getParameter("roomId"), request.getParameter("roomTitle")) > 0){
@@ -49,7 +50,7 @@ public class RtcController {
         String roomId = request.getParameter("roomId");
         String roomPass = request.getParameter("pass");
 
-        if (biz.compareInfo(roomId, roomPass) == 1){
+        if (biz.compareInfo(roomId, roomPass) > 0){
             return "redirect:https://localhost:3000/" + roomId;
         }
         return "redirect:listRoom.do";
