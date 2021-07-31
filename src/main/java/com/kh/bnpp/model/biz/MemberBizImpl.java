@@ -3,6 +3,7 @@ package com.kh.bnpp.model.biz;
 
 import java.util.List;
 
+import com.kh.bnpp.model.dto.PagingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,16 @@ public class MemberBizImpl implements MemberBiz{
 	@Override
 	public int updatepw(MemberDto dto) {
 		return dao.updatepw(dto);
+	}
+
+	@Override
+	public int countMember(PagingDto pdto) {
+		return dao.countMember(pdto);
+	}
+
+	@Override
+	public List<MemberDto> selectMember(PagingDto pdto) {
+		return dao.selectMember(pdto);
 	}
 }
 

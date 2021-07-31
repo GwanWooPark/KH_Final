@@ -391,12 +391,12 @@
 		</div>
 		
 		<div class="mypage">
-			<h3>화상 채팅방 개설</h3>
-			
+			<h3>화상 채팅방 개설 </h3>
+			<form action="createRoom.do" method="POST">
+				<input type="text" name="roomTitle"/>
+				<input type="submit" value="방 만들기">
+			</form>
 		</div>
-		
 	</div>
-	</div>
-	
 </body>
 </html>

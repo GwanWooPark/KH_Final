@@ -127,7 +127,21 @@
 			$("#pw_msg").text("비밀번호가 일치합니다");
 		}
 	}
-	
+
+	$(function () {
+		$('a').click(function () {
+			var roomId = $(this).attr("class").replace('https://146.56.135.129:3000/', '');
+			var pass = prompt("비밀번호를 입력하세요 : " );
+			$.ajax({
+				url: "roomPass.do",
+				method: "POST",
+				data: {"roomId" : roomId, "pass": pass},
+				success: function () {
+					location.href = "https://146.56.135.129:3000/" + roomId;
+				}
+			})
+		});
+	});
 	
 </script>
 </head>
@@ -135,7 +149,6 @@
 
 <jsp:include page="header.jsp" />
 	<div class="main-banner wow fadeIn">
-
 	<div class="mypage-body">
 		<div id="mypage_nav" style="z-index: 1; ">
 			<nav>
@@ -144,6 +157,7 @@
 					<li><a class="mymenu">나의 냉장고</a></li>
 					<li><a class="mymenu">회원정보수정</a></li>
 					<li><a class="mymenu">회원탈퇴</a></li>
+					<li><a class="mymenu">화상강의</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -356,6 +370,27 @@
 					<button type="submit" class="btn btn-outline-danger" style="font-weight: bold">회원 탈퇴</button>
 				</div>
 			</form>
+		</div>
+
+		<div class="mypage">
+			<h3>방 목록</h3>
+			<br/>
+			<div class="mypage_rtc">
+				<c:choose>
+					<c:when test="${empty r_list }">
+						<span>----------생성된 방이 없습니다----------</span>
+					</c:when>
+					<c:otherwise>
+						<ul>
+							<c:forEach items="${r_list }" var="r_dto">
+								<li class="rtc_list">
+									<a href="#" class="${r_dto.rtc_room }">${r_dto.rtc_title}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 	</div>
 	

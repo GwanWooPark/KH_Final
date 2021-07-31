@@ -28,11 +28,6 @@
     <a href="chatlogin.do">Chatlogin</a> <br>
     <a href="machine.do">machine</a>
     <a href="main.do">main</a>
-    <form action="createRoom.do" method="POST">
-        <input type="text" name="roomTitle"/>
-        <input type="submit" value="방 만들기">
-    </form>
-    <a href="listRoom.do">방 목록 보기</a>
     <br>
     <br>
     <br>

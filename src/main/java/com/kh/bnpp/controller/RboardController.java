@@ -104,10 +104,8 @@ public class RboardController {
 			@RequestParam(required = false, defaultValue = "br_title") String searchType,
 			@RequestParam(required = false) String keyword) {
 
-		// System.out.println(searchType);
-		// System.out.println(keyword);
-
 		int total = biz.countBoard(pdto);
+;
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";

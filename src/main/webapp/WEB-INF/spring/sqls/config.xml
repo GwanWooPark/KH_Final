@@ -19,7 +19,8 @@
 		<typeAlias type="com.kh.bnpp.model.dto.FoodListDto" alias="FoodListDto"/>
 		<typeAlias type="com.kh.bnpp.model.dto.PayDto" alias="PayDto"/>
 		<typeAlias type="com.kh.bnpp.model.dto.QboardDto" alias="QboardDto"/>
-		<typeAlias type="com.kh.bnpp.model.dto.ClassDetailDto" alias="ClassDetailDto"/> 
+		<typeAlias type="com.kh.bnpp.model.dto.ClassDetailDto" alias="ClassDetailDto"/>
+		<typeAlias type="com.kh.bnpp.model.dto.RtcDto" alias="RtcDto"/>
 	</typeAliases>
 	
 	<!--  resource : src/main/resources와 연결됨 -->
@@ -33,7 +34,8 @@
 		<mapper resource="/mybatis/bill-mapper.xml"/>
 		<mapper resource="/mybatis/food-mapper.xml"/>
 		<mapper resource="/mybatis/pay-mapper.xml"/>
-		<mapper resource="/mybatis/class-mapper.xml"/> 
+		<mapper resource="/mybatis/class-mapper.xml"/>
+		<mapper resource="/mybatis/rtc-mapper.xml"/>
 	</mappers>
 </configuration>
 

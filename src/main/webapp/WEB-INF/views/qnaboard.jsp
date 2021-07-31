@@ -44,8 +44,7 @@ a {
 	<jsp:include page="header.jsp" />
 
 	<div class="main-banner wow fadeIn">
-		
-<div style="position: relative; left: 4%; z-index: 1; width: 100px">
+		<div style="position: relative; left: 4%; z-index: 1; width: 100px">
 			<nav>
 				<ul class="menus" style="list-style: none;">
 					고객센터 메뉴
@@ -138,12 +137,6 @@ a {
 			</div>
 		</div>
 	</div>
-
-
 	</div>
-
-
-
-
 </body>
 </html>

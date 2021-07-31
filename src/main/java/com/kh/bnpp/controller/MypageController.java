@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.bnpp.model.biz.*;
+import com.kh.bnpp.model.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.bnpp.model.biz.BillBiz;
-import com.kh.bnpp.model.biz.ClassBiz;
-import com.kh.bnpp.model.biz.FileUploadBiz;
-import com.kh.bnpp.model.biz.FoodBiz;
-import com.kh.bnpp.model.biz.MemberBiz;
-import com.kh.bnpp.model.biz.PayBiz;
-import com.kh.bnpp.model.dto.BillDto;
-import com.kh.bnpp.model.dto.ClassDetailDto;
-import com.kh.bnpp.model.dto.ClassDto;
-import com.kh.bnpp.model.dto.FoodDto;
-import com.kh.bnpp.model.dto.FoodListDto;
-import com.kh.bnpp.model.dto.MemberDto;
-import com.kh.bnpp.model.dto.PayDto;
 import com.kh.bnpp.sms.SMS;
 
 @Controller
@@ -62,6 +51,9 @@ public class MypageController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
+	@Autowired
+	private RtcBiz r_biz;
+
 	@Value("${imgfile.Uploadpath}")
 	private String imgUploadPath;	//이거는 로컬에 저장되는거 C:\\Workspaces\\Workspace_final\\SpringProjectBnpp\\src\\main\\webapp\\resources\\img\\
 	
@@ -82,7 +74,7 @@ public class MypageController {
 		List<FoodDto> foods = f_biz.selectList();
 		String f_life, phone, content;
 		MemberDto alarm_dto = new MemberDto();
-		
+
 		for (FoodDto f_dto : foods) {
 			if (f_dto.getFood_alarm_yn().equals("N")) {
 				f_life = f_dto.getFood_life();
@@ -115,7 +107,7 @@ public class MypageController {
 		} else if (dto.getMember_role().equals("T")) {
 			return "redirect:mypage_teacher.do?member_id="+member_id;
 		} else {
-			return "redirect:mypage_admin.do?member_id="+member_id;
+			return "redirect:mypage_admin.do";
 		}
 	}
 	
@@ -133,6 +125,7 @@ public class MypageController {
 		model.addAttribute("c_list", c_list);
 		model.addAttribute("f_list", f_list);
 		model.addAttribute("m_dto", m_dto);
+		model.addAttribute("r_list", r_biz.selectRoomList());
 		return "mypage_student";
 	}
 	
@@ -146,7 +139,32 @@ public class MypageController {
 		model.addAttribute("m_dto", m_dto);
 		return "mypage_teacher";
 	}
-	
+
+	@RequestMapping("/mypage_admin.do")
+	public String mypage_admin(Model model, PagingDto pdto, @RequestParam(value = "nowPage", required = false) String nowPage,
+							   @RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+
+
+		int total = m_biz.countMember(pdto);
+
+
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		pdto = new PagingDto(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", pdto);
+		model.addAttribute("list", m_biz.selectMember(pdto));
+
+		System.out.println(pdto.toString());
+
+		return "mypage_admin";
+	}
 	@RequestMapping("/studentupdateres.do")
 	public String studentupdateres(MemberDto dto) {
 		if (m_biz.updatestudent(dto) > 0) {
@@ -193,7 +211,19 @@ public class MypageController {
 		logger.info("비밀번호 불일치");
 		return "redirect:mypage.do?member_id="+member_id;
 	}
-	
+
+	@RequestMapping("/adminMemberDel.do")
+	public String adminMemberDel(String member_id) {
+		MemberDto dto = m_biz.selectOne(member_id);
+
+		if (m_biz.delete(dto) > 0) {
+			logger.info("회원 삭제 성공");
+			return "mypage_admin";
+		}
+		logger.info("회원 삭제 실패");
+		return "mypage_admin";
+	}
+
 	@RequestMapping("/updatepw.do")
 	public String updatepw(Model model, String member_id) {
 		model.addAttribute("member_id", member_id);

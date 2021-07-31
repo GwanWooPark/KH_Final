@@ -4,6 +4,7 @@ package com.kh.bnpp.model.biz;
 import java.util.List;
 
 import com.kh.bnpp.model.dto.MemberDto;
+import com.kh.bnpp.model.dto.PagingDto;
 
 public interface MemberBiz {
 
@@ -21,5 +22,8 @@ public interface MemberBiz {
 	public int updatestudent(MemberDto dto);
 	public int updateteacher(MemberDto dto);
 	public int updatepw(MemberDto dto);
+
+	public int countMember(PagingDto pdto);
+	public List<MemberDto> selectMember(PagingDto pdto);
 }
 

@@ -4,6 +4,7 @@ package com.kh.bnpp.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.bnpp.model.dto.PagingDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -182,6 +183,30 @@ public class MemberDaoImpl implements MemberDao {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	@Override
+	public int countMember(PagingDto pdto) {
+		int res = 0;
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"countMember",pdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public List<MemberDto> selectMember(PagingDto pdto) {
+
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		try {
+			list = sqlSession.selectList(NAMESPACE + "selectMember", pdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
 
