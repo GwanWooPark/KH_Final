@@ -6,15 +6,17 @@ public class RecipeDto {
     private String recipe_name;
     private String recipe_ingredient;
     private String recipe_info;
+    private String recipe_path;
 
     public RecipeDto() {
     }
 
-    public RecipeDto(int recipe_num, String recipe_name, String recipe_ingredient, String recipe_info) {
+    public RecipeDto(int recipe_num, String recipe_name, String recipe_ingredient, String recipe_info, String recipe_path) {
         this.recipe_num = recipe_num;
         this.recipe_name = recipe_name;
         this.recipe_ingredient = recipe_ingredient;
         this.recipe_info = recipe_info;
+        this.recipe_path = recipe_path;
     }
 
     public int getRecipe_num() {
@@ -47,5 +49,13 @@ public class RecipeDto {
 
     public void setRecipe_info(String recipe_info) {
         this.recipe_info = recipe_info;
+    }
+
+    public String getRecipe_path() {
+        return recipe_path;
+    }
+
+    public void setRecipe_path(String recipe_path) {
+        this.recipe_path = recipe_path;
     }
 }

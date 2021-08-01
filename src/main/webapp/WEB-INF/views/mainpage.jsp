@@ -34,6 +34,13 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	function popupCenter(href, w, h) {
+		var xPos = (document.body.offsetWidth/2) - (w/2); // 가운데 정렬
+		var yPos = (document.body.offsetHeight/2) - (h/2);
+		window.open(href, "pop_name", "width="+w+", height="+h+", left="+xPos+", top="+yPos+", menubar=yes, status=yes, titlebar=yes, resizable=yes");
+	}
+</script>
+<script type="text/javascript">
 $(function() {
 	//var floatPosition = parseInt($("quick_menu").css('top'));
 	$(window).scroll(function () {  //브라우저에 스크롤이 발생하는 순간부터
@@ -155,7 +162,7 @@ z-index : 9999; /* 해당 요소 맨앞으로 가져오기  */
 		<ul>  <!--  class="bi bi-headphones"  alt="headphones" style="font-size: 2rem;"  : 글자가 같이 커짐-->
 			<li width="60" height="60" ><a href="chatlogin.do"><img src="resources/assets/images/sidebar1.png" width="100" alt=""></a></li> <br>
 			<li><a href="kitchenmap.do"><img src="resources/assets/images/sidebar2.png" width="100" alt=""></a></li><br>
-			<li><a href="recipe.do"><img src="resources/assets/images/sidebar3.png" width="100" alt=""></a></li><br>
+			<li><a href="#" onclick="popupCenter('recipe.do', '620', '680')"><br><img src="resources/assets/images/sidebar3.png" width="100" alt=""></a></li><br>
 			<li><a href="machine.do"><img src="resources/assets/images/sidebar4.png" width="100" alt=""></a></li>
 		</ul>
 	</div>
