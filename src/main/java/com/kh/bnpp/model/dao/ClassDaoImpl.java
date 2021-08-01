@@ -1,7 +1,9 @@
 package com.kh.bnpp.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.bnpp.model.dto.PagingDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -85,4 +87,29 @@ public class ClassDaoImpl implements ClassDao {
 		return res;
 	}
 
+	@Override
+	public int countClass(PagingDto pdto) {
+		int res = 0;
+
+		try {
+			res = sqlSession.selectOne(NAMESPACE + "countClass", pdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public List<ClassDto> selectClass(PagingDto pdto) {
+
+		List<ClassDto> list = new ArrayList<ClassDto>();
+
+		try {
+			list = sqlSession.selectList(NAMESPACE + "selectClass", pdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

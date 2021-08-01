@@ -54,6 +54,7 @@ public class MypageController {
 	@Autowired
 	private RtcBiz r_biz;
 
+
 	@Value("${imgfile.Uploadpath}")
 	private String imgUploadPath;	//이거는 로컬에 저장되는거 C:\\Workspaces\\Workspace_final\\SpringProjectBnpp\\src\\main\\webapp\\resources\\img\\
 	
@@ -141,27 +142,44 @@ public class MypageController {
 	}
 
 	@RequestMapping("/mypage_admin.do")
-	public String mypage_admin(Model model, PagingDto pdto, @RequestParam(value = "nowPage", required = false) String nowPage,
-							   @RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+	public String mypage_admin(Model model, PagingDto m_pdto, PagingDto c_pdto,
+							   @RequestParam(value = "nowPage", required = false) String m_nowPage,
+							   @RequestParam(value = "cntPerPage", required = false) String m_cntPerPage,
+							   @RequestParam(value = "nowPage", required = false) String c_nowPage,
+							   @RequestParam(value = "cntPerPage", required = false) String c_cntPerPage) {
 
 
-		int total = m_biz.countMember(pdto);
+		int m_total = m_biz.countMember(m_pdto);
+		int c_total = c_biz.countClass(c_pdto);
 
-
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "5";
+		if (m_nowPage == null && m_cntPerPage == null) {
+			m_nowPage = "1";
+			m_cntPerPage = "5";
+		} else if (m_nowPage == null) {
+			m_nowPage = "1";
+		} else if (m_cntPerPage == null) {
+			m_cntPerPage = "5";
 		}
 
-		pdto = new PagingDto(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		model.addAttribute("paging", pdto);
-		model.addAttribute("list", m_biz.selectMember(pdto));
 
-		System.out.println(pdto.toString());
+		if (c_nowPage == null && c_cntPerPage == null) {
+			c_nowPage = "1";
+			c_cntPerPage = "5";
+		} else if (c_nowPage == null) {
+			c_nowPage = "1";
+		} else if (c_cntPerPage == null) {
+			c_cntPerPage = "5";
+		}
+
+		m_pdto = new PagingDto(m_total, Integer.parseInt(m_nowPage), Integer.parseInt(m_cntPerPage));
+		c_pdto = new PagingDto(c_total, Integer.parseInt(c_nowPage), Integer.parseInt(c_cntPerPage));
+
+		System.out.println(m_cntPerPage);
+		System.out.println(m_nowPage);
+		model.addAttribute("m_paging", m_pdto);
+		model.addAttribute("m_list", m_biz.selectMember(m_pdto));
+		model.addAttribute("c_paging", c_pdto);
+		model.addAttribute("c_list", c_biz.selectClass(c_pdto));
 
 		return "mypage_admin";
 	}
@@ -222,6 +240,18 @@ public class MypageController {
 		}
 		logger.info("회원 삭제 실패");
 		return "mypage_admin";
+	}
+
+	@RequestMapping("/adminClassDel.do")
+	public String adminClassDel(String class_num) {
+
+		if (c_biz.delete(Integer.parseInt(class_num)) > 0) {
+			logger.info("강의 삭제 성공");
+			return "redirect:mypage_admin.do";
+		}
+		logger.info("강의 삭제 실패");
+
+		return "redirect:mypage_admin.do";
 	}
 
 	@RequestMapping("/updatepw.do")

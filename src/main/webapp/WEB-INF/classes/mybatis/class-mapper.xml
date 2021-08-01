@@ -7,7 +7,12 @@
 		FROM MEMBER M , CLASS C 
 		WHERE C.TEACHER_ID = #{teacher_id} AND M.MEMBER_ID = C.TEACHER_ID
 	</select>
-	
+
+	<select id="selectClassList" resultType="ClassDto">
+		SELECT *
+		FROM CLASS;
+	</select>
+
 	<select id="selectOne" parameterType="int" resultType="ClassDto">
 		SELECT C.CLASS_NUM, C.TEACHER_ID, C.CLASS_TITLE, C.CLASS_INTRO, C.CLASS_PRICE, C.CLASS_HOW, C.CLASS_WHERE, C.CLASS_INGRED, C.CLASS_CONTENT, C.CLASS_REGDATE, C.CLASS_MEDIA_NAME, C.CLASS_MEDIA_PATH, M.MEMBER_NAME, M.MEMBER_CATEGORY 
 		FROM MEMBER M , CLASS C 
@@ -30,6 +35,26 @@
 		WHERE CLASS_NUM = #{class_num}
 	</delete>
 
+	<!-- 총 클래스 수 -->
+	<select id="countClass" resultType="int">
+		SELECT COUNT(*) FROM
+		CLASS
+	</select>
+
+	<!-- 페이징 클래스 -->
+	<select id="selectClass" resultType="ClassDto" parameterType="PagingDto">
+		SELECT TEACHER_ID, CLASS_TITLE, CLASS_PRICE, CLASS_CONTENT, CLASS_NUM
+		FROM (
+				 SELECT ROWNUM RN, TEACHER_ID, CLASS_TITLE, CLASS_PRICE, CLASS_CONTENT, CLASS_NUM
+				 FROM (
+						  SELECT TEACHER_ID, CLASS_TITLE, CLASS_PRICE, CLASS_CONTENT, CLASS_NUM
+						  FROM CLASS
+						  ORDER BY TEACHER_ID DESC
+					  ) A
+			 )
+		WHERE (RN BETWEEN #{start}
+			AND #{end})
+	</select>
 </mapper>
 
 

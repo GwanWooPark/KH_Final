@@ -2,6 +2,7 @@ package com.kh.bnpp.model.biz;
 
 import java.util.List;
 
+import com.kh.bnpp.model.dto.PagingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +51,13 @@ public class ClassBizImpl implements ClassBiz {
 		return dao.delete(class_num);
 	}
 
+	@Override
+	public int countClass(PagingDto pdto) {
+		return dao.countClass(pdto);
+	}
+
+	@Override
+	public List<ClassDto> selectClass(PagingDto pdto) {
+		return dao.selectClass(pdto);
+	}
 }
