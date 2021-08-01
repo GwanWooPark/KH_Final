@@ -20,13 +20,16 @@ public class RtcController {
     @RequestMapping("createRoom.do")
     public String webRtc(Model model, HttpServletRequest request) {
 
-        return "redirect:https://146.56.135.129:8787?roomTitle=" + request.getParameter("roomTitle");
+        return "redirect:https://192.168.35.74:3000?roomTitle=" + request.getParameter("roomTitle");
 
     }
 
     @RequestMapping(value = "insertRoom.do")
     @ResponseBody
     public String insertRoom(HttpServletRequest request) {
+
+        System.out.println("roomId : " + request.getParameter("roomId"));
+        System.out.println("roomTitle : " + request.getParameter("roomTitle"));
         if (biz.insertRoom(request.getParameter("roomId"), request.getParameter("roomTitle")) > 0){
             return "";
         } else {
@@ -35,16 +38,15 @@ public class RtcController {
         return "";
     }
 
-    @RequestMapping(value = "roomPass.do", method = RequestMethod.POST)
+    @RequestMapping(value = "roomPass.do")
     @ResponseBody
     public String roomPass(HttpServletRequest request) {
 
+
         String roomId = request.getParameter("roomId");
+        System.out.println(roomId);
         String roomPass = request.getParameter("pass");
 
-        if (biz.compareInfo(roomId, roomPass) > 0){
-            return "redirect:https://146.56.135.129:3000/" + roomId;
-        }
-        return "redirect:listRoom.do";
+        return "redirect:https://192.168.35.74:3000/" + roomId;
     }
 }

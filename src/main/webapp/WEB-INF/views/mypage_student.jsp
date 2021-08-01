@@ -38,22 +38,22 @@
 		$('.mymenus li').eq(0).trigger('click');
 	});
 	
-	$(function() {
-		$( "#datepicker" ).datepicker({
-		    dateFormat: 'yy-mm-dd',
-		    prevText: '이전 달',
-		    nextText: '다음 달',
-		    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		    dayNames: ['일','월','화','수','목','금','토'],
-		    dayNamesShort: ['일','월','화','수','목','금','토'],
-		    dayNamesMin: ['일','월','화','수','목','금','토'],
-		    showMonthAfterYear: true,
-		    changeMonth: true,
-		    changeYear: true,
-		    yearSuffix: '년'
-		  });
-	});
+	// $(function() {
+	// 	$( "#datepicker" ).datepicker({
+	// 	    dateFormat: 'yy-mm-dd',
+	// 	    prevText: '이전 달',
+	// 	    nextText: '다음 달',
+	// 	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	// 	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	// 	    dayNames: ['일','월','화','수','목','금','토'],
+	// 	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	// 	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	// 	    showMonthAfterYear: true,
+	// 	    changeMonth: true,
+	// 	    changeYear: true,
+	// 	    yearSuffix: '년'
+	// 	  });
+	// });
 		
 	function check() {
 		var member_phone = $('input[name=member_phone_1]').val() + "-"
@@ -127,23 +127,15 @@
 			$("#pw_msg").text("비밀번호가 일치합니다");
 		}
 	}
-
-	$(function () {
-		$('a').click(function () {
-			var roomId = $(this).attr("class").replace('https://146.56.135.129:3000/', '');
-			var pass = prompt("비밀번호를 입력하세요 : " );
-			$.ajax({
-				url: "roomPass.do",
-				method: "POST",
-				data: {"roomId" : roomId, "pass": pass},
-				success: function () {
-					location.href = "https://146.56.135.129:3000/" + roomId;
-				}
-			})
-		});
-	});
-	
 </script>
+	<script>
+		$(function () {
+			$('#rtcEnter').click(function () {
+				var roomId = $(this).attr("class");
+				location.href="https://192.168.35.74:3000/" + roomId;
+			});
+		});
+	</script>
 </head>
 <body>
 
@@ -383,8 +375,9 @@
 					<c:otherwise>
 						<ul>
 							<c:forEach items="${r_list }" var="r_dto">
-								<li class="rtc_list">
-									<a href="roomPass.do" class="${r_dto.rtc_room }">${r_dto.rtc_title}</a>
+								<li class="rtc_list" style="z-index: 1">
+                                  <%--<a id="rtcEnter" href="roomPass.do" class="${r_dto.rtc_room }">${r_dto.rtc_title}</a>--%>
+									<button id="rtcEnter" class="${r_dto.rtc_room}?roomTitle=${r_dto.rtc_title}">방 입장</button>
 								</li>
 							</c:forEach>
 						</ul>

@@ -127,18 +127,15 @@
 			$("#pw_msg").text("비밀번호가 일치합니다");
 		}
 	}
-	
-	
+
+
 </script>
 </head>
 <body>
 
 <jsp:include page="header.jsp" />
 	<div class="main-banner wow fadeIn">
-
-	
 	<div class="mypage-body">
-	
 		<div id="mypage_nav" style="z-index: 1;">
 			<nav>
 				<ul class="mymenus">
