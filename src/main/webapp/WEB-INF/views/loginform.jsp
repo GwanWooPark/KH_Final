@@ -98,7 +98,7 @@
 				<!-- 카카오 로그인 -->
 				<td colspan="2" align="center">
 					<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=2e020dd405766ebb1d85e5c9a0892a99&redirect_uri=http://localhost:3334/bnpp/kakaologin.do">
-						<img src="resources/upload/img/kakao_login_medium_narrow.png" alt="kakaologin" >
+						<img src="resources/img/kakao_login_medium_narrow.png" alt="kakaologin" >
 					</a>
 				</td>
 			</tr>

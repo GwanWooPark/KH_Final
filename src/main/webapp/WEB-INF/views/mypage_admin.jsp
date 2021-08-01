@@ -36,6 +36,12 @@
         border: none;
         background-color: white;
     }
+
+    .mypage_body {
+        width: 1200px;
+        margin: 0 auto;
+        height: 60%;
+    }
 </style>
 <script type="text/javascript">
     $(function() {
@@ -54,7 +60,7 @@
 <jsp:include page="header.jsp" />
 
 <div class="main-banner wow fadeIn">
-    <div class="mypage-body">
+    <div class="mypage_body">
         <div id="mypage_nav" style="z-index: 1;">
             <nav>
                 <ul class="mymenus">
@@ -66,15 +72,6 @@
 
         <div class="mypage">
             <div class="mypage_member">
-                <div style="float: right;">
-                    <select id="m_cntPerPage" name="sel" onchange="m_selChange()">
-                        <option value="5" <c:if test="${m_paging.cntPerPage == 5}">selected</c:if>>5줄  보기</option>
-                        <option value="10" <c:if test="${m_paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
-                        <option value="15" <c:if test="${m_paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
-                    </select>
-                </div>
-            <!-- 옵션선택 끝 -->
-
                 <table class="table table-bordered">
                     <col width="60">
                     <col width="300">
@@ -127,22 +124,13 @@
 
         <div class="mypage">
             <div class="mypage_class">
-                <div style="float: right;">
-                    <select id="c_cntPerPage" name="sel" onchange="c_selChange()">
-                        <option value="5" <c:if test="${c_paging.cntPerPage == 5}">selected</c:if>>5줄  보기</option>
-                        <option value="10" <c:if test="${c_paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
-                        <option value="15" <c:if test="${c_paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
-                    </select>
-                </div>
-                <!-- 옵션선택 끝 -->
-
                 <table class="table table-bordered">
-                    <col width="90">
+                    <col width="100">
                     <col width="150">
                     <col width="100">
                     <col width="150">
                     <tr>
-                        <th>강사 번호</th>
+                        <th>강사 아이디</th>
                         <th>강의명</th>
                         <th>강의 가격</th>
                         <th>강의 내용</th>

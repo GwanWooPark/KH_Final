@@ -80,7 +80,7 @@
 												<input type="hidden" name="member_id"
 													value="${dbDto.member_id }">
 											</form> <a href="#" onclick="openPopup()"> <img alt="profileimg"
-												src="resources/upload/img/dummy.png" width="40" height="40">
+												src="resources/img/dummy.png" width="40" height="40">
 										</a>
 										</li>
 									</c:if>

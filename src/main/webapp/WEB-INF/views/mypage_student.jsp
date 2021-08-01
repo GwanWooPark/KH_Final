@@ -384,7 +384,7 @@
 						<ul>
 							<c:forEach items="${r_list }" var="r_dto">
 								<li class="rtc_list">
-									<a href="#" class="${r_dto.rtc_room }">${r_dto.rtc_title}</a>
+									<a href="roomPass.do" class="${r_dto.rtc_room }">${r_dto.rtc_title}</a>
 								</li>
 							</c:forEach>
 						</ul>

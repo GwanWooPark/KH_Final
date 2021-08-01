@@ -20,7 +20,7 @@ public class RtcController {
     @RequestMapping("createRoom.do")
     public String webRtc(Model model, HttpServletRequest request) {
 
-        return "redirect:https://146.56.135.129:3000?roomTitle=" + request.getParameter("roomTitle");
+        return "redirect:https://146.56.135.129:8787?roomTitle=" + request.getParameter("roomTitle");
 
     }
 
