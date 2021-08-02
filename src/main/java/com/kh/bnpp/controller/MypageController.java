@@ -108,7 +108,7 @@ public class MypageController {
 		} else if (dto.getMember_role().equals("T")) {
 			return "redirect:mypage_teacher.do?member_id="+member_id;
 		} else {
-			return "redirect:mypage_admin.do";
+			return "redirect:admin_member.do";
 		}
 	}
 	
@@ -141,17 +141,9 @@ public class MypageController {
 		return "mypage_teacher";
 	}
 
-	@RequestMapping("/mypage_admin.do")
-	public String mypage_admin(Model model, PagingDto m_pdto, PagingDto c_pdto,
-							   @RequestParam(value = "nowPage", required = false) String m_nowPage,
-							   @RequestParam(value = "cntPerPage", required = false) String m_cntPerPage,
-							   @RequestParam(value = "nowPage", required = false) String c_nowPage,
-							   @RequestParam(value = "cntPerPage", required = false) String c_cntPerPage) {
-
-
-		int m_total = m_biz.countMember(m_pdto);
-		int c_total = c_biz.countClass(c_pdto);
-
+	@RequestMapping("/admin_member.do")
+	public String adminMember(Model model, PagingDto m_pdto, @RequestParam(value = "nowPage", required = false) String m_nowPage,
+							  @RequestParam(value = "cntPerPage", required = false) String m_cntPerPage) {
 		if (m_nowPage == null && m_cntPerPage == null) {
 			m_nowPage = "1";
 			m_cntPerPage = "5";
@@ -161,6 +153,21 @@ public class MypageController {
 			m_cntPerPage = "5";
 		}
 
+		int m_total = m_biz.countMember(m_pdto);
+		m_pdto = new PagingDto(m_total, Integer.parseInt(m_nowPage), Integer.parseInt(m_cntPerPage));
+
+		model.addAttribute("m_paging", m_pdto);
+		model.addAttribute("m_list", m_biz.selectMember(m_pdto));
+
+		return "admin_member";
+	}
+
+	@RequestMapping("/admin_class.do")
+	public String adminClass(Model model,PagingDto c_pdto,
+							 @RequestParam(value = "nowPage", required = false) String c_nowPage,
+							 @RequestParam(value = "cntPerPage", required = false) String c_cntPerPage) {
+
+		int c_total = c_biz.countClass(c_pdto);
 
 		if (c_nowPage == null && c_cntPerPage == null) {
 			c_nowPage = "1";
@@ -171,18 +178,13 @@ public class MypageController {
 			c_cntPerPage = "5";
 		}
 
-		m_pdto = new PagingDto(m_total, Integer.parseInt(m_nowPage), Integer.parseInt(m_cntPerPage));
 		c_pdto = new PagingDto(c_total, Integer.parseInt(c_nowPage), Integer.parseInt(c_cntPerPage));
-
-		System.out.println(m_cntPerPage);
-		System.out.println(m_nowPage);
-		model.addAttribute("m_paging", m_pdto);
-		model.addAttribute("m_list", m_biz.selectMember(m_pdto));
 		model.addAttribute("c_paging", c_pdto);
 		model.addAttribute("c_list", c_biz.selectClass(c_pdto));
 
-		return "mypage_admin";
+		return "admin_class";
 	}
+
 	@RequestMapping("/studentupdateres.do")
 	public String studentupdateres(MemberDto dto) {
 		if (m_biz.updatestudent(dto) > 0) {

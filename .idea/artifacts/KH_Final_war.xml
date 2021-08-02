@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="war" name="KH_Final:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/KH_Final_war</output-path>
+    <output-path>$USER_HOME$/.ssh</output-path>
     <root id="archive" name="KH_Final_war.war">
       <element id="artifact" artifact-name="KH_Final:war exploded" />
     </root>
