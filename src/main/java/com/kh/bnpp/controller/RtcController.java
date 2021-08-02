@@ -20,7 +20,7 @@ public class RtcController {
     @RequestMapping("createRoom.do")
     public String webRtc(Model model, HttpServletRequest request) {
 
-        return "redirect:https://146.56.135.129:8787?roomTitle=" + request.getParameter("roomTitle");
+        return "redirect:https://192.168.35.74:3000?roomTitle=" + request.getParameter("roomTitle");
 
     }
 
@@ -43,7 +43,7 @@ public class RtcController {
         String roomPass = request.getParameter("pass");
 
         if (biz.compareInfo(roomId, roomPass) > 0){
-            return "redirect:https://146.56.135.129:3000/" + roomId;
+            return "redirect:https://192.168.35.74:3000/" + roomId;
         }
         return "redirect:listRoom.do";
     }

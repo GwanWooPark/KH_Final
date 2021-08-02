@@ -130,14 +130,14 @@
 
 	$(function () {
 		$('a').click(function () {
-			var roomId = $(this).attr("class").replace('https://146.56.135.129:3000/', '');
+			var roomId = $(this).attr("class").replace('https://192.168.35.74:3000/', '');
 			var pass = prompt("비밀번호를 입력하세요 : " );
 			$.ajax({
 				url: "roomPass.do",
 				method: "POST",
 				data: {"roomId" : roomId, "pass": pass},
 				success: function () {
-					location.href = "https://146.56.135.129:3000/" + roomId;
+					location.href = "https://192.168.35.74:3000/" + roomId;
 				}
 			})
 		});
